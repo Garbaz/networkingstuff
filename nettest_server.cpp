@@ -50,36 +50,38 @@ int main(int argc, char* argv[])
 		cerr << "{4} bind error: Unable to bind to port; Try again in a minute" << endl;
 		QUIT(4);
 	}
-	
-	if(listen(sockfd, BACKLOG) == -1)
+
+	while(1)
 	{
-		cerr << "{5} listen error: Unable to listen" << endl;
-		QUIT(5);
-	}
-	
-	conn_addr_size = sizeof conn_addr;
-	if((newfd = accept(sockfd, (struct sockaddr*)&conn_addr, &conn_addr_size)) == -1)
-	{
-		cerr << "{6} accept error: Unable to accept incoming connection" << endl;
-		QUIT(6);
-	}
-	
-	do
-	{
-		if((bytes_recieved = recv(newfd, buffer, BUFFER_LEN, 0)) == -1)
+		if(listen(sockfd, BACKLOG) == -1)
 		{
-			cerr << "{7} recieve error: Something went wrong while recieving message" << endl;
-			//QUIT(7);
+			cerr << "{5} listen error: Unable to listen" << endl;
+			QUIT(5);
 		}
 		
-		for(int i = 0; i < bytes_recieved; i++)
+		conn_addr_size = sizeof conn_addr;
+		if((newfd = accept(sockfd, (struct sockaddr*)&conn_addr, &conn_addr_size)) == -1)
 		{
-			putchar(buffer[i]);
+			cerr << "{6} accept error: Unable to accept incoming connection" << endl;
+			QUIT(6);
 		}
-	}while(bytes_recieved != 0);
-	
-	cout << endl;
-	
+		
+		do
+		{
+			if((bytes_recieved = recv(newfd, buffer, BUFFER_LEN, 0)) == -1)
+			{
+				cerr << "{7} recieve error: Something went wrong while recieving message" << endl;
+				//QUIT(7);
+			}
+			
+			for(int i = 0; i < bytes_recieved; i++)
+			{
+				putchar(buffer[i]);
+			}
+		}while(bytes_recieved != 0);
+		
+		cout << endl;
+	}
 	
 	cleanup();
 	
