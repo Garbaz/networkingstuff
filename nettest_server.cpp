@@ -53,6 +53,7 @@ int main(int argc, char* argv[])
 
 	while(1)
 	{
+		cout << "Waiting for client connection..." << endl;
 		if(listen(sockfd, BACKLOG) == -1)
 		{
 			cerr << "{5} listen error: Unable to listen" << endl;
@@ -66,6 +67,8 @@ int main(int argc, char* argv[])
 			QUIT(6);
 		}
 		
+		cout << "Client successfully connected! Here's what he got to say:" << endl;
+		
 		do
 		{
 			if((bytes_recieved = recv(newfd, buffer, BUFFER_LEN, 0)) == -1)
@@ -78,7 +81,6 @@ int main(int argc, char* argv[])
 			{
 				putchar(buffer[i]);
 			}
-			cout << endl;
 		}while(bytes_recieved != 0);
 	}
 	

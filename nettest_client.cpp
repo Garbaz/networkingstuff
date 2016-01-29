@@ -55,10 +55,13 @@ int main(int argc, char* argv[])
 		QUIT(5);
 	}
 	
+	cout << "Successfully connected to server! Type away:" << endl;
+	
 	while(1)
 	{
 		cout << ">";
-		cin >> msg;
+		getline(cin, msg);
+		msg += '\n';
 		
 		msg_len = msg.length();
 		
