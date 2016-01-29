@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 		QUIT(1);
 	}
 	
-	if((status = getaddrinfo("192.168.178.39", "1729", &hints, &servinfo)) != 0)
+	if((status = getaddrinfo(argv[1], "1729", &hints, &servinfo)) != 0)
 	{
 		cerr << "{2} getaddrinfo error: " << gai_strerror(status) << endl;
 		QUIT(2);

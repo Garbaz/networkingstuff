@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
 			if((bytes_recieved = recv(newfd, buffer, BUFFER_LEN, 0)) == -1)
 			{
 				cerr << "{7} recieve error: Something went wrong while recieving message" << endl;
-				//QUIT(7);
+				QUIT(7);
 			}
 			
 			for(int i = 0; i < bytes_recieved; i++)
