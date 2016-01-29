@@ -61,12 +61,11 @@ int main(int argc, char* argv[])
 	{
 		cout << ">";
 		getline(cin, msg);
+		
+//		cout << "Sending message \"" << msg << "\" (" << msg_len << " characters long)" << endl;
+		
 		msg += '\n';
-		
 		msg_len = msg.length();
-		
-		cout << "Sending message \"" << msg << "\" (" << msg_len << " characters long)" << endl;
-		
 		do
 		{
 			if((bytes_sent = send(sockfd, msg.c_str(), msg_len, 0)) == -1)
