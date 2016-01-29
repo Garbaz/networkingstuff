@@ -78,9 +78,8 @@ int main(int argc, char* argv[])
 			{
 				putchar(buffer[i]);
 			}
+			cout << endl;
 		}while(bytes_recieved != 0);
-		
-		cout << endl;
 	}
 	
 	cleanup();

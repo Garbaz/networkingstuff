@@ -17,8 +17,6 @@ struct addrinfo *servinfo;
 int main(int argc, char* argv[])
 {
 	
-	msg = "PING!";
-	
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
@@ -56,19 +54,24 @@ int main(int argc, char* argv[])
 		cerr << "{5} connect error: Unable to connect to target host" << endl;
 		QUIT(5);
 	}
+	
 	while(1)
 	{
-		cout << ">"; cin >> msg;
+		cout << ">";
+		cin >> msg;
+		
 		msg_len = msg.length();
+		
 		cout << "Sending message \"" << msg << "\" (" << msg_len << " characters long)" << endl;
-		while(bytes_sent < msg_len)
+		
+		do
 		{
 			if((bytes_sent = send(sockfd, msg.c_str(), msg_len, 0)) == -1)
 			{
 				cerr << "{6} send error: Unable to send message" << endl;
 				QUIT(6);
 			}
-		}
+		}while(bytes_sent < msg_len);
 	}
 	
 	
