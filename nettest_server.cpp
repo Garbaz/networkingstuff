@@ -9,7 +9,7 @@
 
 #define PORT "1729"
 #define BACKLOG 10
-#define BUFFER_LEN 32
+#define BUFFER_LEN 256
 #define QUIT(ret) cleanup(); return ret;
 
 using namespace std;
@@ -45,6 +45,12 @@ int main(int argc, char* argv[])
 		QUIT(3);
 	}
 	
+	int yes = 1;
+	if (setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof(int)) == -1) {
+		perror("setsockopt");
+		QUIT(8);
+	}
+	
 	if(bind(sockfd, servinfo->ai_addr, servinfo->ai_addrlen) == -1)
 	{
 		cerr << "{4} bind error: Unable to bind to port; Try again in a minute" << endl;
@@ -76,12 +82,13 @@ int main(int argc, char* argv[])
 				cerr << "{7} recieve error: Something went wrong while recieving message" << endl;
 				QUIT(7);
 			}
-			
+			cout << bytes_recieved << endl;
 			for(int i = 0; i < bytes_recieved; i++)
 			{
 				putchar(buffer[i]);
 			}
 		}while(bytes_recieved != 0);
+		shutdown(newfd,2);
 	}
 	
 	cleanup();
